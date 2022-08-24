@@ -1,0 +1,24 @@
+﻿@model IEnumerable<WebApplicationEMPTY.Model.User>
+@{
+    ViewData["Title"] = "Create";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    
+}
+<h2>Добавление пользователя</h2>
+<form asp-action="create" asp-controller="users">
+    <p>
+        <label asp-for="id">id</label><br />
+        <input type="text" asp-for="id" />
+    </p>
+    <p>
+        <label asp-for="name">name</label><br />
+        <input type="text" asp-for="name" />
+    </p>
+    <p>
+        <label asp-for="phonenumber">phone</label><br />
+        <input type="number" asp-for="phonenumber" />
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+</form>
