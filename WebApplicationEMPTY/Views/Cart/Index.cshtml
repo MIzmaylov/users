@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApplicationEMPTY.Models.Car.CartViewModel
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+   
+    
+     
+            @foreach (var item in Model.cart.listItems)
+            {
+                <div class="alert alert-warning mt-3">
+
+
+                <b class="fw-normal">Модель:</b> @item.car.modelName <br/>
+            <b>Цена:</b> @item.car.price.ToString("C")
+                    
+                </div>
+            }
+            <hr/>
+            <a  class="btn btn-danger" asp-controller="Order" asp-action="Checkout" >Оплатить</a>
+    <a class="btn btn-danger" asp-controller="Cart" asp-action="RemoveCart">Очистить корзину</a>
+        
+     
+
+   
+</div>       

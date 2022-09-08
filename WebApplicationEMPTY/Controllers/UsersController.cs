@@ -15,155 +15,45 @@ namespace WebApplicationEMPTY.Controllers
    
     public class UsersController : Controller
     {
-        ApplicationContext db;
-
-        public UsersController(ApplicationContext context)
-        {
-            db = context;
-        }
-        // public Users _users;
-   
-        // public UsersController(Users users)
-        // {
-        //     _users = users;
-        // }
-        // public IActionResult Users()
-        // {
-        //     var usersRep = _users.GetUsers();
-        //     return View(usersRep);
-        // }
-
-        //public async Task<IActionResult> Users()
-        //{
-        //    var users = _users.GetUsers();
-        //    return View(await users);
-        //}
-
-        //[HttpGet("/users/")]
-        //public IActionResult Users()
-        //{
-        //   var users = _users.GetUsers();
-        //    return View(users);
-        //}
-        public IActionResult Create()
-        {
-           
-            return View();
-        }
-        
-         [HttpPost]
-         public async Task<IActionResult> Create(User user)
-         {
-             await db.users.AddAsync(user);
-             await db.SaveChangesAsync();
-             return Ok();
-         }
-        //
-        // [HttpPost]
-        // public async Task<IActionResult> Delete(int? id)
-        // {
-        //     if (id != null)
-        //     {
-        //         User? user = await db.Users.FirstOrDefaultAsync(p => p.Id == id);
-        //         if (user != null)
-        //         {
-        //             db.Users.Remove(user);
-        //             await db.SaveChangesAsync();
-        //             return RedirectToPage("~/home/Index.cshtml");
-        //         }
-        //     }
-        //     return NotFound();
-        // }
-        //
-        // public async Task<IActionResult> Edit(int? id)
-        // {
-        //     if (id != null)
-        //     {
-        //         User? user = await db.Users.FirstOrDefaultAsync(p => p.Id == id);
-        //         if (user != null) return View(user);
-        //     }
-        //     return NotFound();
-        // }
-        // [HttpPost]
-        // public async Task<IActionResult> Edit(User user)
-        // {
-        //     db.Users.Update(user);
-        //     await db.SaveChangesAsync();
-        //     return RedirectToPage("~/home/Index.cshtml");
-        // }
+        private DBUsers dbUsers = new DBUsers();
 
 
-
-        //public async Task<IActionResult> Users()
-        //{
-        //    var users = _users.GetUsers();
-        //    return Json(users);
-        //}
-
-       
         [HttpGet("/api/users/")]
-        public async Task<IActionResult> _Getempty(ApplicationContext db)
+        public async Task<IActionResult> GetListUsers()
         {
-
-            var GetDbItems = await db.users.ToListAsync();
-
-            return Json(GetDbItems);
-           
-        }
+            return Json(dbUsers.GetListUsers());
+           }
 
 
         [HttpGet("/api/users/{id:int}")]
-        public async Task<IActionResult> _Get (int id)
+        public async Task<IActionResult> GetUserId (int id)
         {
-            User user = db.users.FirstOrDefault(u => u.id == id);
-            // если не найден, отправляем статусный код и сообщение об ошибке
-            if (user == null) return NotFound(new { message = "Пользователь не найден" });
-
-            // если пользователь найден, отправляем его
-            return Json(user);
+           return Json(dbUsers.GetUserId(id));
         }
 
 
         [HttpDelete("/api/users/{id:int}")] 
-        public async Task<IActionResult> _Delete(int id, ApplicationContext db)
+        public async Task<IActionResult> DeleteUser(int id)
 
         {
-            User? user = await db.users.FirstOrDefaultAsync(u => u.id == id);
-
-            // если не найден, отправляем статусный код и сообщение об ошибке
-            if (user == null) return NotFound(new { message = "Пользователь не найден" });
-
-            // если пользователь найден, удаляем его
-            db.users.Remove(user);
-            await db.SaveChangesAsync();
-            return Json(user);
+           return Json(dbUsers.DeleteUser(id));
         }
 
 
 
 
         [HttpPost("/users/api/")]
-        public  async Task<IActionResult> _Post(User user)
+        public  async Task<IActionResult> PostUser ([FromBody]User user)
         {
-             db.users.Add(user);
-             await db.SaveChangesAsync();
+            dbUsers.AddUser(user);
             return Json(user);
            
         }
 
         [HttpPut("users/api/users")]
-        public async Task<IActionResult> _Put(User userData, ApplicationContext db)
+        public async Task<IActionResult> PutUser([FromBody] User userData)
         {
-            var user = await db.users.FirstOrDefaultAsync(u => u.id == userData.id);
-
-            // если не найден, отправляем статусный код и сообщение об ошибке
-            if (user == null) return NotFound(new { message = "Пользователь не найден" });
-
-            // если пользователь найден, изменяем его данные и отправляем обратно клиенту
-            user.phonenumber = userData.phonenumber;
-            user.name = userData.name;
-            await db.SaveChangesAsync();
-            return Json(user);
+            return Json(dbUsers.PutUser(userData));
 
         }
         public IActionResult crudusers()

@@ -1,0 +1,48 @@
+﻿
+@model WebApplicationEMPTY.Models.Car.CarListViewModel
+@{
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    Layout = "/Views/Shared/_Layout.cshtml";
+    }
+
+ 
+<div class="container">
+    <h2>Каталог автомобилей </h2>
+<div class="container">
+    <form method="get">
+        <div class="form-inline form-group">
+           
+            <label class="control-label">Категория: </label>
+            <select name="categoryInput" class="form-control" asp-items="Model.Categories" ></select>
+            <input type="submit" value="Фильтр" class="btn btn-default"/>
+        </div>
+    </form>
+<div class="container marketing">
+
+       
+    <div class="row">
+        @foreach (var item in Model.Cars)
+        {
+            <div class="col-lg-4">
+                <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="@item.img">
+
+                <h2 class="fw-normal">Модель: @item.modelName</h2>
+                <p>Цена: @item.price.ToString("C")</p>
+
+                <a class="btn btn-warning" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.id">Добавить в корзину</a>
+
+            </div>
+        }
+           
+               
+    </div>
+       
+
+    
+   
+    
+   
+</div>
+</div>
+
+   </div>

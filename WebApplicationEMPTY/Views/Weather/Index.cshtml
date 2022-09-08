@@ -1,0 +1,24 @@
+﻿
+
+@model WebApplicationEMPTY.Models.weather.WeatherResponse
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div style="height: 200px; width: 400px;">
+    <table class="table table-hover">
+        <thead><tr><th>temp</th><th>city</th><th></th></tr></thead>
+        
+        
+        <tbody>
+
+        
+        <tr>
+
+            <td>@Model.main.temp</td>
+            <td>@Model.name</td>
+        </tr>
+        
+        </tbody>
+    </table> 
+</div>
